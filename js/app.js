@@ -21,10 +21,6 @@ window.onload = function() {
 //------------------------------------------------------------------------------
 function init() {
     {
-//        renderer = new THREE.WebGLRenderer({antialias: true});
-//        renderer.domElement.style.position = 'fixed';
-//        renderer.domElement.id = 'canvas';
-//        document.getElementById('container').appendChild(renderer.domElement);
         container = document.createElement('div');
         document.body.appendChild(container);
         renderer = new THREE.WebGLRenderer({antialias: true});
@@ -41,7 +37,6 @@ function init() {
 function onWindowResize() {
     resizeCamera();
     renderer.setSize(window.innerWidth, window.innerHeight);
-//    render();
 }
 //------------------------------------------------------------------------------
 function animate() {
