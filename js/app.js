@@ -14,7 +14,7 @@ var light = [];
 var time = 0;
 var theta = 0;
 var radius = 600;
-var particleCount = 1800;
+var particleCount = 90;
 //------------------------------------------------------------------------------
 window.onload = function() {
     if(Detector.webgl) {

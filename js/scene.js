@@ -22,7 +22,7 @@ function initScene() {
             });
     
     cube = new THREE.Mesh(geometry, material);
-    cube.position.y = 150;
+    cube.position.y = 0;
     scene.add( cube );
 
     // Particle System
@@ -37,12 +37,12 @@ function initScene() {
                 blending: THREE.AdditiveBlending,
                 transparent: true
             });
-    for(var i = 0; i < particleCount; i++) {
-        var pX = Math.random() * 500 - 250;
-        var pY = Math.random() * 500 - 250;
-        var pZ = Math.random() * 500 - 250;
-        particle = new THREE.Vector3(pX, pY, pZ);
-        particles.vertices.push(particle);
+    for(var i = 0; i < geometry.vertices.length; i++) {
+        for(var p = 0; p < particleCount; p++) {
+            var origin = geometry.vertices[i];
+            particle = origin;
+            particles.vertices.push(particle);
+        }
     }
     particleSystem = new THREE.ParticleSystem(particles, particleMaterial);
     particleSystem.sortParticles = true;
