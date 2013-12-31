@@ -18,6 +18,22 @@
     <script src="./js/scene.js"></script>
     <script src="./js/camera.js"></script>
     <script src="./js/fullscreen.js"></script>
+<script type="x-shader/x-vertex" id="vertexShader">
+  varying vec2 vUv;
+  void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+  }
+</script>
+<script type="x-shader/x-fragment" id="fragmentShader">
+  uniform float phase;
+  varying vec2 vUv;
+  void main() {
+  float alpha = pow(1.0-abs(vUv.y-phase),10.0)*3.0+0.05;
+  gl_FragColor = vec4(0.05,0.15,0.1,alpha);
+  }
+</script>
+
 <!--<div id="body">
 <p>
     I am a test
