@@ -23,6 +23,7 @@ function initScene() {
     
     cube = new THREE.Mesh(geometry, material);
     cube.position.y = 0;
+    cube.position.x = 0;
     scene.add( cube );
 
     // Particle System
@@ -37,16 +38,30 @@ function initScene() {
                 blending: THREE.AdditiveBlending,
                 transparent: true
             });
-    for(var i = 0; i < geometry.vertices.length; i++) {
+    for(var i = 0; i < cube.geometry.vertices.length; i++) {
         for(var p = 0; p < particleCount; p++) {
-            var particle = new THREE.Vector3();
-            particle.copy(geometry.vertices[i]);
-            particle.velocity = new THREE.Vector3(0, -Math.random(), 0);
+            var particle = new Particle();
+            particle.copy(cube.geometry.vertices[i]);
+            particle.dir = -1;
+            particle.velocity = new THREE.Vector3(0, 0, 0);
             particles.vertices.push(particle);
         }
     }
     particleSystem = new THREE.ParticleSystem(particles, particleMaterial);
     particleSystem.sortParticles = true;
     scene.add(particleSystem);
+
+    var lineMaterial = new THREE.LineBasicMaterial(
+                                    {
+                                        color: 0xFF0000
+                                    });
+
+    var lineGeometry = new THREE.Geometry();
+    lineGeometry.vertices.push(new THREE.Vector3(0,0,0));
+    lineGeometry.vertices.push(new THREE.Vector3(100, 0, 0));
+    lineGeometry.vertices.push(new THREE.Vector3(0, -100, 0)); 
+    lineGeometry.vertices.push(new THREE.Vector3(0, 0, -100));
+    var line = new THREE.Line(lineGeometry, lineMaterial);
+    scene.add(line);
 }
 //------------------------------------------------------------------------------

@@ -56,21 +56,29 @@ function animate() {
     time = Date.now();
     
     // Temporary Particle System animation
-    var numberOfVertices = geometry.vertices.length;
+    //particle.velocity.x += particle.dir * Math.random() * 0.5;
+    var numberOfVertices = cube.geometry.vertices.length;
     for(var i = 0; i < numberOfVertices * particleCount; i++) {
         var particle = particles.vertices[i];
         switch(i % 3) {
             case 0:
-                particle.velocity.x -= Math.random() * 0.5;
+                particle.velocity.x = particle.dir + Math.random() * 0.1;
                 break;
             case 1:
-                particle.velocity.y -= Math.random() * 0.5;
+                particle.velocity.y = particle.dir + Math.random() * 0.1;
                 break;
             case 2:
-                particle.velocity.z -= Math.random() * 0.5;
+                particle.velocity.z = particle.dir + Math.random() * 0.1;
                 break;
         }
         particle.add(particle.velocity);
+        for(var v =  0; v < numberOfVertices; v++) {
+            if(particle.distanceTo(cube.geometry.vertices[v]) <= 1 ||
+               particle.distanceTo(cube.geometry.vertices[v]) > 200) {
+                    particle.dir *= -1;
+                    break;
+               }
+        }
     }
     // Temporary camera animation
     theta += 0.5;
