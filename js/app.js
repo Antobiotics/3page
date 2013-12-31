@@ -1,13 +1,20 @@
 "use strict";
 
 var container, renderer;
+var time = 0;
 var scene;
 var camera;
 var mesh;
 var cube;
+var particleSystem;
+var particles = [];
+var particleMaterial;
 var material;
-var light;
+var light = [];
 var time = 0;
+var theta = 0;
+var radius = 600;
+var particleCount = 1800;
 //------------------------------------------------------------------------------
 window.onload = function() {
     if(Detector.webgl) {
@@ -27,6 +34,7 @@ function init() {
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(renderer.domElement);
         window.addEventListener('resize', onWindowResize, false);
+        document.addEventListener('mousedown', onDocumentMouseDown, false);
     }
     // Init functions here.
     initScene();
@@ -39,7 +47,20 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 //------------------------------------------------------------------------------
+function onDocumentMouseDown() {
+    event.preventDefault();
+}
+//------------------------------------------------------------------------------
 function animate() {
+    TWEEN.update();
+    time = Date.now();
+    theta += 0.5;
+
+    camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
+    camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
+    camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
+    camera.lookAt( scene.position );
+
     updateCamera();
     render();
     requestAnimationFrame(animate);
